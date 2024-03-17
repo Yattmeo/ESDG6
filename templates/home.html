@@ -25,7 +25,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand me-4" href="#">
-                <img src="../images/CareMD_icon.png" width="30" height="30" class="d-inline-block align-top" alt="CareMD logo">
+                <img src="../images/CareMD_icon.png" width="30" height="30" class="d-inline-block align-top"
+                    alt="CareMD logo">
             </a>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
@@ -48,13 +49,15 @@
                 <div class="bg-light p-3">
                     <h4>Speciality</h4>
                     <div class="form-check ">
-                        <input class="form-check-input" style="outline: 1px solid #1e5180" type="checkbox" value="" id="filter1">
+                        <input class="form-check-input" style="outline: 1px solid #1e5180" type="checkbox" value=""
+                            id="filter1">
                         <label class="form-check-label" for="filter1">
                             Orthopedic
                         </label>
                     </div>
                     <div class="form-check e">
-                        <input class="form-check-input" style="outline: 1px solid #1e5180" type="checkbox" value="" id="filter2">
+                        <input class="form-check-input" style="outline: 1px solid #1e5180" type="checkbox" value=""
+                            id="filter2">
                         <label class="form-check-label" for="filter2">
                             Endocrinology
                         </label>
@@ -72,7 +75,8 @@
                     <div class="row">
                         <div class="col-md-6 text-white">
                             <h2 style="color:black">Looking for a GP doctor?</h2>
-                            <p style ="color:rgb(0, 39, 124)">Click on "Book Now" to be randomly assigned a GP doctor.</p>
+                            <p style="color:rgb(0, 39, 124)">Click on "Book Now" to be randomly assigned a GP
+                                doctor.</p>
                             <a href="#" class="btn theme btn-light">Book Now</a>
                         </div>
                     </div>
@@ -82,11 +86,47 @@
                     <div class="card-body">
                         <h5 class="card-title">Dr. John Doe</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Speciality: Endocrinology</h6>
-                        <a href="#" class="btn theme btn-sm float-end">Book</a>
+                        <!-- Add data-bs-toggle and data-bs-target attributes to trigger the modal -->
+                        <a href="#" class="btn theme btn-sm float-end" data-bs-toggle="modal"
+                            data-bs-target="#bookModal">Book</a>
                     </div>
                 </div>
             </div>
-            
+        </div>
+    </div>
+
+    <!-- Book Modal -->
+    <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookModalLabel">Book Appointment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="doctorName" class="form-label">Doctor Name</label>
+                        <input type="text" class="form-control" id="doctorName" value="Dr. John Doe" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="reason" class="form-label">Reason</label>
+                        <input type="text" class="form-control" id="reason">
+                    </div>
+                    <div class="mb-3">
+                        <label for="medication" class="form-label">Current Medication</label>
+                        <input type="text" class="form-control" id="medication">
+                    </div>
+                    <div class="mb-3">
+                        <label for="patientID" class="form-label">Patient ID</label>
+                        <input type="text" class="form-control" id="patientID" value="PAT-12345" readonly>
+                    </div>
+                    <!-- Add availability calendar-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Book Appointment</button>
+                </div>
+            </div>
         </div>
     </div>
 
