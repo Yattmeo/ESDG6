@@ -97,7 +97,7 @@
 
     <!-- Book Modal -->
     <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-content modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="bookModalLabel">Book Appointment</h5>
@@ -121,14 +121,40 @@
                         <input type="text" class="form-control" id="patientID" value="PAT-12345" readonly>
                     </div>
                     <!-- Add availability calendar-->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Book Appointment</button>
-                </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <!-- Availability calendar -->
+                            <div class="col-md-6">
+                                <div class="calendar">
+                                    <div class="header">
+                                        <h3>Availability Calendar</h3>
+                                        <div id="calendar" class="justify-content-center"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Time slots -->
+                            <div class="col-md-6">
+                                <div class="time-slots">
+                                    <h3>Time Slots</h3>
+                                    <div class="slot">9:00 AM</div>
+                                    <div class="slot">9:30 AM</div>
+                                    <div class="slot">10:00 AM</div>
+                                    <div class="slot">10:30 AM</div>
+                                    <!-- Add more time slots as needed -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Book Appointment</button>
+                    </div>
             </div>
         </div>
     </div>
+
+    
+
 
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -140,6 +166,23 @@
         flatpickr('#calendar', {
             inline: true,
             dateFormat: 'Y-m-d',
+        });
+    </script>
+    <script>// script.js
+        document.addEventListener('DOMContentLoaded', function() {
+          // Add click event listener to time slots
+          const slots = document.querySelectorAll('.slot');
+          slots.forEach(slot => {
+            slot.addEventListener('click', function() {
+              // Highlight selected slot
+              slots.forEach(s => s.classList.remove('selected'));
+              this.classList.add('selected');
+              // Retrieve selected date and time
+              const day = document.querySelector('.days .day.selected').textContent;
+              const time = this.textContent;
+              console.log(`Selected date: ${day}, Selected time: ${time}`);
+            });
+          });
         });
     </script>
 </body>

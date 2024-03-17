@@ -12,3 +12,48 @@
     color: white;
 }
 
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .calendar {
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  .header {
+    text-align: center;
+  }
+  
+  .days {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  
+  .day {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .time-slots {
+    margin-top: 20px;
+  }
+  
+  .slot {
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .slot:hover {
+    background-color: #f0f0f0;
+  }
+  
