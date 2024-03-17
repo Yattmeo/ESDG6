@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <title>CareMD</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../images/CareMD_icon.png" type="image/x-icon">
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand me-4" href="#">
+                <img src="../images/CareMD_icon.png" width="30" height="30" class="d-inline-block align-top" alt="CareMD logo">
+            </a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="home.html">Create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Manage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar (to be replaced by vue) -->
+            <div class="col-md-3">
+                <div class="bg-light p-3">
+                    <h4>Speciality</h4>
+                    <div class="form-check ">
+                        <input class="form-check-input" style="outline: 1px solid #1e5180" type="checkbox" value="" id="filter1">
+                        <label class="form-check-label" for="filter1">
+                            Orthopedic
+                        </label>
+                    </div>
+                    <div class="form-check e">
+                        <input class="form-check-input" style="outline: 1px solid #1e5180" type="checkbox" value="" id="filter2">
+                        <label class="form-check-label" for="filter2">
+                            Endocrinology
+                        </label>
+                    </div>
+                    <br><br>
+                    <!-- Calendar -->
+                    <h4>Date</h4>
+                    <div id="calendar"></div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="container-fluid blue py-4 px-4">
+                    <div class="row">
+                        <div class="col-md-6 text-white">
+                            <h2 style="color:black">Looking for a GP doctor?</h2>
+                            <p style ="color:rgb(0, 39, 124)">Click on "Book Now" to be randomly assigned a GP doctor.</p>
+                            <a href="#" class="btn theme btn-light">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Doctor Cards -->
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Dr. John Doe</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Specialty: Endocrinology</h6>
+                        <a href="#" class="btn theme btn-sm float-end">Book</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Vue.js 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr('#calendar', {
+            inline: true,
+            dateFormat: 'Y-m-d',
+        });
+    </script>
+</body>
+
+</html>
