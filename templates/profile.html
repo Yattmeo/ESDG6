@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareMD</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../images/CareMD_icon.png" type="image/x-icon">
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand me-4" href="#">
+            <img src="../images/CareMD_icon.png" width="30" height="30" class="d-inline-block align-top" alt="CareMD logo">
+        </a>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="home.html">Create</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="manage.html">Manage</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="profile.html" style="color:black">Profile</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="p-3 border-end">
+                <p style="color:grey">Patient Database > Patient Profile</p>
+                <h3 class="mb-3">
+                    Tom Cruise
+                </h3>
+                <p>20 years, 5 months, 10 days old</p>
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <p style="color:grey">Patient Details</p>
+                    <a href="#" class="text-decoration-none text-secondary" data-bs-toggle="modal" data-bs-target="#editPatientModal">Edit</a>
+                </div>
+                <!-- Form displayed without borders -->
+                <div class="mb-3 no-box">
+                    <label for="patientID" class="form-label">Patient ID</label>
+                    <input type="text" class="form-control" id="patientID" value="PAT12345" readonly>
+                </div>
+                <div class="mb-3 no-box">
+                    <label for="patientEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="patientEmail" value="tom@example.com" readonly>
+                </div>
+                <div class="mb-3 no-box">
+                    <label for="patientPhone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="patientPhone" value="123-456-7890" readonly>
+                </div>
+                <div class="mb-3 no-box">
+                    <label for="patientDOB" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="patientDOB" value="2004-02-10" readonly>
+                </div>
+                <div class="mb-3 no-box">
+                    <label for="patientGender" class="form-label">Gender</label>
+                    <input type="text" class="form-control" id="patientGender" value="Male" readonly>
+                </div>
+                <div class="mb-3 no-box">
+                    <label for="patientAddress" class="form-label">Address</label>
+                    <textarea class="form-control" id="patientAddress" rows="3" readonly>123 Street Name, City, Country</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Small Navbar -->
+        <div class="col-md-9 py-2">
+            <div class="small-navbar">
+                <a href="#" class="active" data-content="appointment-history">Appointment History</a>
+                <a href="#" data-content="outstanding-appointments">Outstanding Appointments</a>
+                <a href="#" data-content="existing-medical-conditions">Existing Medical Conditions</a>
+                <div class="active-line"></div>
+            </div>
+            <!-- Appointment History Columns -->
+            <div class="row mt-4 p-4" id="appointment-history">
+                <div class="col-md-4">
+                    <div class="appointment-column">
+                        <h5 class="text-muted">Doctor</h5>
+                        <p>Dr. Smith</p>
+                        <p>Dr. Johnson</p>
+                        <p>Dr. Lee</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="appointment-column">
+                        <h5 class="text-muted">Visit Date</h5>
+                        <p>2024-03-15</p>
+                        <p>2024-03-10</p>
+                        <p>2024-03-05</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="appointment-column">
+                        <h5 class="text-muted">Status</h5>
+                        <p>Completed</p>
+                        <p>Upcoming</p>
+                        <p>Completed</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Outstanding Appointments Columns -->
+            <div class="row mt-4 p-4 d-none" id="outstanding-appointments">
+                <div class="col-md-12">
+                    <h3>Outstanding Appointments</h3>
+                    <!-- Add content for outstanding appointments here -->
+                    hi
+                </div>
+            </div>
+            <!-- Existing Medical Conditions Columns -->
+            <div class="row mt-4 p-4 d-none" id="existing-medical-conditions">
+                <div class="col-md-12">
+                    <h3>Existing Medical Conditions</h3>
+                    <!-- Add content for existing medical conditions here -->
+                    hi
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Bootstrap JavaScript-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Edit Patient Modal -->
+    <div class="modal fade" id="editPatientModal" tabindex="-1" aria-labelledby="editPatientModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editPatientModalLabel">Edit Patient Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form to edit patient details -->
+                    <div class="mb-3">
+                        <label for="editPatientEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editPatientEmail" value="tom@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPatientPhone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="editPatientPhone" value="123-456-7890">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPatientDOB" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="editPatientDOB" value="2004-02-10">
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPatientGender" class="form-label">Gender</label>
+                        <select class="form-select" id="editPatientGender">
+                            <option selected>Choose...</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPatientAddress" class="form-label">Address</label>
+                        <textarea class="form-control" id="editPatientAddress" rows="3">123 Street Name, City, Country</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle content switching based on clicked link
+        const smallNavbarLinks = document.querySelectorAll('.small-navbar a');
+        const activeLine = document.querySelector('.active-line');
+    
+        smallNavbarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetContentId = this.getAttribute('data-content');
+    
+                // Hide all content
+                document.querySelectorAll('.col-md-9 > .row').forEach(content => {
+                    content.classList.add('d-none');
+                });
+    
+                // Show the target content
+                document.getElementById(targetContentId).classList.remove('d-none');
+    
+                // Remove 'active' class from all links
+                smallNavbarLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+    
+                // Add 'active' class to the clicked link
+                this.classList.add('active');
+    
+                // Move active line below the clicked link
+                const linkPosition = this.getBoundingClientRect();
+                const navPosition = this.parentElement.getBoundingClientRect();
+                activeLine.style.width = linkPosition.width + 'px';
+                activeLine.style.transform = `translateX(${linkPosition.left - navPosition.left}px)`;
+            });
+        });
+    </script>
+    
+    
+</body>
+
+</html>
