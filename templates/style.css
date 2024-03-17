@@ -56,4 +56,34 @@ body {
   .slot:hover {
     background-color: #f0f0f0;
   }
-  
+
+.small-navbar {
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+}
+
+.small-navbar a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
+
+.appointment-column {
+        border-bottom: 1px solid #ccc; 
+        padding-bottom: 15px; 
+}
+
+.appointment-column h5 {
+        font-size: 16px;
+        margin-bottom: 10px; 
+}
+
+.appointment-column p {
+    font-size: 15px;
+    margin-bottom: 10px; 
+}
+
+.active-line{
+    border-bottom: 2px solid #0d5683;
+}
+
