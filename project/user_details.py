@@ -4,6 +4,8 @@ from flask_cors import CORS
 from os import environ
 
 app = Flask(__name__)
+CORS(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root:root@localhost:3306/USERDETAILS'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -12,7 +14,7 @@ db = SQLAlchemy(app)
 CORS(app)
 
 class User(db.Model):
-    __tablename__ = 'user_details'
+    __tablename__ = 'USERDETAILS'
     User_ID = db.Column(db.Integer, primary_key=True)
     phone_number = db.Column(db.BigInteger)
     email = db.Column(db.String(255))
@@ -30,7 +32,7 @@ class User(db.Model):
 # Route to get user details by User_ID
 @app.route("/user/<int:User_ID>")
 def get_user_details(User_ID):
-    user = User.query.filter_by(User_ID=User_ID).first()
+    user = db.session.scalars(db.select(User).filter_by(User_ID=User_ID)).first()
     if user:
         return jsonify(
             {
