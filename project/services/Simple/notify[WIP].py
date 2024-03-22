@@ -8,10 +8,11 @@ app = Flask(__name__)
 
 # Find your Account SID and Auth Token at twilio.com/console
 account_sid = 'ACea65d1e2ea1abe9ca0e8c443e0cbdc79'
-auth_token = '670cce8450ed59903e937bf4075719d8'
+# left blank for now (security risk if exposed and twilio will regenerate it --> need to keep changing)
+auth_token = ''
 twilio_phone_number = '+18783488056' #free trial number
 # To set up environmental variables, see http://twil.io/secure
-# for some reason i cant get env var to work
+# for some reason i cant get env var to work in twilio.env
 # account_sid = os.environ['TWILIO_ACCOUNT_SID']
 # auth_token = os.environ['TWILIO_AUTH_TOKEN']
 
@@ -29,9 +30,10 @@ twilio_client = Client(account_sid, auth_token)
 
 # Define the mapping for message codes to actual messages
 message_templates = {
-    -1: "Your appointment has been cancelled due to: {reason}",
-    0: "Your new appointment has been confirmed.",
-    1: "Please make a new appointment. Reason: {reason}"
+    -1: "Please log into your account to confirm a new appointment.",
+    0: "Your appointment has been confirmed.",
+    1: "Your appointment has been cancelled due to: {reason}. Please log into your account to make a new appointment.",
+    2: "Your appointment has been completed."
 }
 
 @app.route('/notify', methods=['POST'])
@@ -39,7 +41,7 @@ def notify():
     # Extract data from incoming JSON
     data = request.get_json()
     
-    # Get contact information from updateUserinfo microservice
+    # Get contact information from updateUserinfo microservice (to update endpoint for updateUserInfo)
     user_info_response = requests.get('http://updateUserinfo_microservice_endpoint', json={
         "patientID": data["patientID"],
         "doctorID": data["doctorID"],
@@ -52,8 +54,8 @@ def notify():
     user_info = user_info_response.json()
     
     # Determine the recipient and their number
-    recipient_type = 'patient' if data["messageCode"] == -1 else 'doctor'
-    recipient_number = user_info[f"{recipient_type}Number"]
+    recipient_type = 'doctor' if data["messageCode"] == -1 else 'patient'
+    recipient_number = "+65" + user_info[f"{recipient_type}Number"]
 
     # Prepare the message
     message = message_templates.get(data["messageCode"]).format(reason=data["messageDetails"])
