@@ -3,7 +3,7 @@
 JSON = {
     "patientID": 112345,
     "doctorID": 212345,
-    "messageCode": -1, // -1: apppointment cancelled, 0: confirm new appointment, 1: please make a new appointment
+    "messageCode": 1, // -1: confirm new appointment (doctor), 0: appointment confirmed (patient), 1: please make a new appointment (patient), 2: appointment completed (patient)
     "messageDetails": "doctor unavailable" //this can get processed further later by the notify microservice
   }
 
@@ -21,9 +21,11 @@ JSON = {
 
 // format to send to twillo
 //idk gotta go research
-
-
-
+message_sent = twilio_client.messages.create(
+  body=message,
+  from_= +18783488056,
+  to=recipient_number
+)
 
 // response to whoever
 JSON = {
