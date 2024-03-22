@@ -21,9 +21,11 @@ JSON = {
 
 // format to send to twillo
 //idk gotta go research
-
-
-
+message_sent = twilio_client.messages.create(
+  body=message,
+  from_= +18783488056,
+  to=recipient_number
+)
 
 // response to whoever
 JSON = {
