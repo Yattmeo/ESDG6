@@ -41,6 +41,7 @@ class Ehr(db.Model):
             "family_medical_history": self.family_medical_history,
             "past_appointments": self.past_appointments
         }
+
 # Route to get ehr by patient_id
 @app.route("/ehr/<int:patient_id>")
 def get_patient_ehr(patient_id):
@@ -59,35 +60,51 @@ def get_patient_ehr(patient_id):
         }
     ), 404
 
-# Route to update Ehr data for a specific patient
-@app.route("/ehr/<int:patient_id>", methods=['POST'])
-def update_patient_ehr(patient_id):
+# Route to create or update Ehr data for a specific patient
+@app.route("/ehr/<int:patient_id>", methods=['POST', 'PUT'])
+def create_or_update_patient_ehr(patient_id):
     try:
-        ehr = db.session.scalars(
-        db.select(Ehr).filter_by(patient_id=patient_id).
-        limit(1)).first()
-        if not ehr:
-            return jsonify(
-                {
-                    "code": 404,
-                    "data": {
-                        "patient_id": patient_id
-                    },
-                    "message": "Health record not found."
-                }
-            ), 404
-
-        # update status
-        data = request.get_json()
-        if data['status']:
-            ehr.status = data['status']
+        # Check if the Ehr record exists
+        ehr = Ehr.query.filter_by(patient_id=patient_id).first()
+        if ehr:
+            # Update the existing Ehr record
+            data = request.get_json()
+            ehr.medical_conditions = data.get('medical_conditions', ehr.medical_conditions)
+            ehr.allergies = data.get('allergies', ehr.allergies)
+            ehr.medications = data.get('medications', ehr.medications)
+            ehr.surgeries = data.get('surgeries', ehr.surgeries)
+            ehr.immunisations = data.get('immunisations', ehr.immunisations)
+            ehr.family_medical_history = data.get('family_medical_history', ehr.family_medical_history)
+            ehr.past_appointments = data.get('past_appointments', ehr.past_appointments)
+        else:
+            # Create a new Ehr record
+            data = request.get_json()
+            ehr = Ehr(
+                patient_id=patient_id,
+                medical_conditions=data.get('medical_conditions'),
+                allergies=data.get('allergies'),
+                medications=data.get('medications'),
+                surgeries=data.get('surgeries'),
+                immunisations=data.get('immunisations'),
+                family_medical_history=data.get('family_medical_history'),
+                past_appointments=data.get('past_appointments')
+            )
+            db.session.add(ehr)
             db.session.commit()
             return jsonify(
                 {
-                    "code": 200,
+                    "code": 201,
                     "data": ehr.json()
                 }
-            ), 200
+            ), 201
+        
+        db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "data": ehr.json()
+            }
+        ), 200
     except Exception as e:
         return jsonify(
             {
@@ -98,45 +115,6 @@ def update_patient_ehr(patient_id):
                 "message": "An error occurred while updating the record. " + str(e)
             }
         ), 500
-    # ehr = Ehr.query.filter_by(patient_id=patient_id).first()
-    # if ehr:
-
-    #     # Get data from the request
-    #     data = request.get_json()
-    #     if 'status' in data and data['status']:  # Check if key exists and has a value
-    #         ehr.status = data['status']
-    #     db.session.commit()
-    #     # Update the Ehr object with new data
-    #     ehr.medical_conditions = data.get('medical_conditions', ehr.medical_conditions)
-    #     ehr.allergies = data.get('allergies', ehr.allergies)
-    #     ehr.medications = data.get('medications', ehr.medications)
-    #     ehr.surgeries = data.get('surgeries', ehr.surgeries)
-    #     ehr.immunisations = data.get('immunisations', ehr.immunisations)
-    #     ehr.family_medical_history = data.get('family_medical_history', ehr.family_medical_history)
-    #     ehr.past_appointments = data.get('past_appointments', ehr.past_appointments)
-
-
-    # try: 
-    #     db.session.add(ehr)
-    #     db.session.commit()
-    # except:
-    #     return jsonify( 
-    #         {
-    #             "code": 500,
-    #             "data": {
-    #                 "patient_id": patient_id
-    #             },
-    #             "message": "An error occurred updating ehr."
-    #         }
-    #     ), 500
-
-
-    # return jsonify(
-    #       {
-    #         "code": 201,
-    #         "data": ehr.json()
-    #     }
-    # ), 201
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5004, debug=True)
