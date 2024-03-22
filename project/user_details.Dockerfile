@@ -1,22 +1,20 @@
-# Use the official Python image as the base image
-FROM python:3.8
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set the working directory inside the container
+# Set the working directory in the container
 WORKDIR /usr/src/app
 
-# Copy the requirements file into the container
-COPY requirements.txt .
-
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application code into the container
+# Copy the current directory contents into the container at /usr/src/app
 COPY . .
 
-# Expose port 5000 to the outside world
-EXPOSE 5000
+# Install any needed dependencies specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Command to run the Flask application
+# Expose the port Flask will run on
+EXPOSE 5003
+
+# Define environment variable
+ENV DB_URL=mysql+mysqlconnector://caremd@host.docker.internal:3306/USERDETAILS
+
+# Run the Flask application
 CMD ["python", "user_details.py"]
-
-
