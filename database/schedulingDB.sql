@@ -14,6 +14,15 @@ USE `schedulingDB`;
 
 DROP TABLE IF EXISTS `DoctorAvailability`;
 
+DROP TABLE IF EXISTS `Doctors`;
+
+CREATE TABLE `Doctors` (
+  `DoctorID` INTEGER NOT NULL AUTO_INCREMENT,
+  `Specialty` VARCHAR(255),
+  `Name` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`DoctorID`)
+);
+
 CREATE TABLE `DoctorAvailability` (
   `AppointmentID` INTEGER NOT NULL AUTO_INCREMENT,
   `Date` DATE NOT NULL,
@@ -23,14 +32,6 @@ CREATE TABLE `DoctorAvailability` (
   FOREIGN KEY (`DoctorID_Doctors`) REFERENCES `Doctors` (`DoctorID`)
 );
 
-DROP TABLE IF EXISTS `Doctors`;
-
-CREATE TABLE `Doctors` (
-  `DoctorID` INTEGER NOT NULL AUTO_INCREMENT,
-  `Specialty` VARCHAR(255),
-  `Name` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`DoctorID`)
-);
 
 -- ---
 -- Table Properties
