@@ -36,9 +36,9 @@ class schedule(db.Model):
     def json(self):
         dto = {
             'appointmentID': self.AppointmentID,
-            'date': self.Date,
-            'SlotNum': self.SlotNum,
-            'doctorID_doctors': self.DoctorID_Doctors,
+            'date': self.date,
+            'SlotNum': self.slots,
+            'doctorID_doctors': self.doctorID,
         }
         return dto
 
@@ -46,46 +46,44 @@ class schedule(db.Model):
 def create_availability():
     date = request.json.get('date',None)
     doctorID = request.json.get('doctorID',None)
-    patientID = request.json.get('patientID',None)
-    slot = request.json.get('slot',None)
+    slot = request.json.get('slots',None)
     
-    new_appt = Appointment(date=date,
-                           slot=slot, 
-                           doctorID=doctorID, 
-                           patientID=patientID,
-                           status="pending")
+    new_avail = schedule(date=date,
+                        slot=slot, 
+                        doctorID=doctorID, 
+                        )
 
     try:
-        db.session.add(new_appt)
+        db.session.add(new_avail)
         db.session.commit()
     except Exception as e:
         return jsonify(
             {
                 "code": 500,
-                "data": new_appt.json(),
+                "data": new_avail.json(),
                 "message": "An error occurred while creating the appointment. " + str(e)
             }
         ), 500
     
-    print("Appointment created successfully.")
-    print(json.dumps(new_appt.json(), indent=4,default=str))   
+    print("Availability created successfully.")
+    print(json.dumps(new_avail.json(), indent=4,default=str))   
     
     return jsonify(
         {
             "code": 201,
-            "data": new_appt.json()
+            "data": new_avail.json()
         }
     )
 
 @app.route("/appointments/<string:doctor_id>", methods=['GET'])
 def get_appointments(doctor_id):
-    all_appts = db.session.scalars(db.select(Appointment).filter_by(DoctorID_Doctors=doctor_id))
-    if len(all_appts):
+    all_availability = db.session.scalars(db.select(schedule).filter_by(DoctorID_Doctors=doctor_id))
+    if len(all_availability):
         return jsonify(
             {
                 "code": 200,
-                "appointments": {
-                    "orders": [appt.json() for appt in all_appts]
+                "dateItems": {
+                    "slots": [avail.json() for avail in all_availability]
                 }
             }
         )
@@ -93,26 +91,22 @@ def get_appointments(doctor_id):
         return jsonify(
         {
             "code": 404,
-            "message": "There are no appointments."
+            "message": "There are no slots."
         }
     ), 404
 
 @app.route("/schedule/<string:doctor_id>", methods=['PUT'])
-def update_availability(appt_id):
-
-    date = request.json.get('date',None)
-    clinic = request.json.get('clinic',None)
-    doctorID = request.json.get('doctorID',None)
-    patientID = request.json.get('patientID',None)
-    status = request.json.get('status',None)
+def update_availability(doctor_ID):
     
-    appointment = Appointment.query.get(appt_id)
-    if appointment:
-        appointment.date = date
-        appointment.clinic = clinic
-        appointment.doctorID = doctorID
-        appointment.patientID = patientID
-        appointment.status = status
+    date = request.json.get('date',None)
+    doctorID = request.json.get('doctorID',None)
+    slots = request.json.get('slots',None)
+    
+    new_schedule = schedule.query.get(doctor_ID)
+    if new_schedule:
+        new_schedule.date = date
+        new_schedule.doctorID = doctorID
+        new_schedule.slots = slots
         try:
             db.session.commit()
         except Exception as e:
@@ -137,5 +131,5 @@ def update_availability(appt_id):
         ), 404
 
 if __name__ == '__main__':
-    print("This is flask for " + os.path.basename(__file__) + ": manage appointments ...")
+    print("This is flask for " + os.path.basename(__file__) + ": manage availability ...")
     app.run(host='0.0.0.0', port=5001, debug=True)
