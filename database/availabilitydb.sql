@@ -16,7 +16,7 @@ CREATE TABLE `Doctors` (
   PRIMARY KEY (`DoctorID`)
 );
 
-CREATE TABLE Availability (
+CREATE TABLE `Availability` (
     `doctorID` INT,
     `date` DATE,
     `slots` TEXT,
