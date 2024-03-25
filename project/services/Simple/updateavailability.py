@@ -25,7 +25,7 @@ class DoctorAvailability(db.Model):
 
     AppointmentID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Date = db.Column(db.Date, nullable=False)
-    SlotNum = db.Column(db.TINYINT, nullable=False)
+    SlotNum = db.Column(db.Integer, nullable=False)
     DoctorID_Doctors = db.Column(db.Integer, db.ForeignKey('Doctors.DoctorID'), nullable=False)
 
     doctor = relationship("Doctor")
@@ -116,4 +116,4 @@ def update_availability(doctor_id):
 
 if __name__ == '__main__':
     print("This is flask for " + os.path.basename(__file__) + ": manage availability ...")
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
