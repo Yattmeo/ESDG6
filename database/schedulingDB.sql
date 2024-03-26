@@ -29,11 +29,11 @@ CREATE TABLE `DoctorAvailability` (
 );
 
 -- Insert dummy data into Doctors table
-INSERT INTO `Doctors` (`Specialty`, `Name`) VALUES
-('Cardiologist', 'Dr. Smith'),
-('Neurologist', 'Dr. Johnson'),
-('Pediatrician', 'Dr. Williams'),
-('Dermatologist', 'Dr. Brown');
+INSERT INTO `Doctors` (`DoctorID`, `Specialty`, `Name`) VALUES
+(1, 'Cardiologist', 'Dr. Smith'),
+(2, 'Neurologist', 'Dr. Johnson'),
+(3, 'Pediatrician', 'Dr. Williams'),
+(4, 'Dermatologist', 'Dr. Brown');
 
 -- Insert dummy data into DoctorAvailability table
 INSERT INTO `DoctorAvailability` (`Date`, `SlotNum`, `DoctorID_Doctors`) VALUES
