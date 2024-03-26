@@ -1,0 +1,251 @@
+# to edit based on our services
+
+version: "3.8"
+
+volumes:
+  rabbitmq_data:
+
+services:
+ 
+  ###################################
+  # Update Appointment: The Update Appointment microservice
+  ###################################
+  updateAppointment:
+    build:
+      context: ./
+      dockerfile: updateAppointment.Dockerfile
+    image: #name of image
+    restart: always
+    environment:
+      DB_URL: mysql+mysqlconnector://root@localhost:3306/order
+      PYTHONUNBUFFERED: 1
+ 
+  #######################################################
+  # Update Availability: The Update Availability microservice
+  #######################################################
+  updateAvailability:
+    build:
+      context: ./
+      dockerfile: updateAvailability.Dockerfile
+    image: #name of image
+    restart: always
+    environment:
+      DB_URL: mysql+mysqlconnector://root@localhost:3306/availabilitydb
+      PYTHONUNBUFFERED: 1
+
+  ###################################
+  # Notify: The Notify microservice
+  ###################################
+  notify:
+    build:
+      context: ./
+      dockerfile: notify.Dockerfile
+    image: #name of image
+    restart: always
+    environment:
+      PYTHONUNBUFFERED: 1
+
+    #######################################################
+  # Update EHR: The Update Availability microservice
+  #######################################################
+  updateEHR:
+    build:
+      context: ./
+      dockerfile: updateEHR.Dockerfile
+    image: #name of image
+    restart: always
+    environment:
+      DB_URL: mysql+mysqlconnector://root:root@localhost:3306/EHR
+      PYTHONUNBUFFERED: 1
+
+      #######################################################
+  # Update User Info: The Update User Info microservice
+  #######################################################
+  updateUserInfo:
+    build:
+      context: ./
+      dockerfile: updateUserInfo.Dockerfile
+    image: #name of image
+    restart: always
+    environment:
+      PYTHONUNBUFFERED: 1
+
+  # ####################################
+  # # RabbitMQ: The messaging broker   
+  # ####################################
+  # rabbitmq:
+  #   image: rabbitmq:3-management
+  #   hostname: esd-rabbit
+  #   restart: always
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+  #   volumes: 
+  #     - ./rabbitmq.config:/etc/rabbitmq/rabbitmq.config #file that rabbitMQ find when it starts
+  #     - ./rabbitmq_definitions.json:/etc/rabbitmq/rabbitmq_definitions.json
+  #     - rabbitmq_data:/var/lib/rabbitmq
+      
+  # #################################################
+  # # Activity Log: The Activity Log microservice
+  # #################################################
+  # activity_log:
+  #   build:
+  #     context: ./
+  #     dockerfile: activity_log.Dockerfile
+  #   image: charislim2020/activity_log:esd
+  #   restart: always
+  #   depends_on:
+  #     - rabbitmq
+  #   environment:
+  #     rabbit_host: rabbitmq
+  #     rabbit_port: 5672
+  #     a_queue_name: Activity_Log
+  #     PYTHONUNBUFFERED: 1
+
+  ###################################
+  # Error: The Error microservice
+  ###################################
+  error:
+    build:
+      context: ./
+      dockerfile: error.Dockerfile
+    image: #name of image
+    restart: always
+    depends_on:
+      - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      e_queue_name: Error
+      PYTHONUNBUFFERED: 1
+
+  ###############################################
+  # Appointment Creator: The Appointment Creator microservice
+  ###############################################
+  appointmentCreator:
+    build:
+      context: ./
+      dockerfile: appointmentCreator.Dockerfile
+    image: #name of image
+    restart: always
+    depends_on:
+      - updateAppointment
+      - Notification
+      # - activity_log
+      - error
+      # - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+    ports:
+      # - "5100:5100"
+
+  ###############################################
+  # Appointment Updater: The Appointment Updater microservice
+  ###############################################
+  appointmentUpdater:
+    build:
+      context: ./
+      dockerfile: appointmentUpdater.Dockerfile
+    image: #name of image
+    restart: always
+    depends_on:
+      - updateAppointment
+      - Notification
+      - EHR
+      # - activity_log
+      - error
+      # - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+    ports:
+      # - "5100:5100"
+
+    ###############################################
+  # Scheduling Handler: The Appointment Updater microservice
+  ###############################################
+  schedulingHandler:
+    build:
+      context: ./
+      dockerfile: schedulingHandler.Dockerfile
+    image: #name of image
+    restart: always
+    depends_on:
+      - updateAppointment
+      - Notification
+      # - activity_log
+      - error
+      # - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+    ports:
+      # - "5100:5100"
+
+      ###############################################
+  # Notification: The Notification microservice
+  ###############################################
+  notification:
+    build:
+      context: ./
+      dockerfile: notification.Dockerfile
+    image: #name of image
+    restart: always
+    depends_on:
+      - Notify
+      # - activity_log
+      - error
+      # - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5006:5006"
+
+        ###############################################
+  # EHR: The EHR microservice
+  ###############################################
+  EHR:
+    build:
+      context: ./
+      dockerfile: EHR.Dockerfile
+    image: #name of image
+    restart: always
+    depends_on:
+      - Notification
+      - appointmentUpdater
+      - updateEHR
+      # - activity_log
+      - error
+      # - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+    ports:
+      # - "5006:5006"
+
+        ###############################################
+  # Login: The Login microservice
+  ###############################################
+  login:
+    build:
+      context: ./
+      dockerfile: login.Dockerfile
+    image: #name of image
+    restart: always
+    depends_on:
+      # - activity_log
+      - error
+      # - rabbitmq
+    environment:
+      rabbit_host: rabbitmq
+      rabbit_port: 5672
+      PYTHONUNBUFFERED: 1
+    ports:
+      # - "5006:5006"
