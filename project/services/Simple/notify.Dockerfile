@@ -18,4 +18,4 @@ ENV TWILIO_ACCOUNT_SID='ACea65d1e2ea1abe9ca0e8c443e0cbdc79'
 ENV TWILIO_AUTH_TOKEN=your_auth_token_here
 
 # Run the Flask application
-CMD ["python", "notify.py"]
+CMD ["python", "/usr/src/app/services/Simple/notify.py"]
