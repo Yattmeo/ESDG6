@@ -22,7 +22,7 @@ CREATE TABLE `Availability` (
     `doctorID` INT,
     `date` DATE,
     `slots` TEXT,
-    PRIMARY KEY(`doctorID`, date)
+    PRIMARY KEY(`doctorID`, date),
     FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`DoctorID`)
 );
 
