@@ -62,9 +62,9 @@ def get_availability(DoctorID_Doctors):
     try:
         availabilities = DoctorAvailability.query.filter_by(DoctorID_Doctors=DoctorID_Doctors).all()
         dateItems = [{"Date": a.Date, "SlotNum": a.SlotNum} for a in availabilities]
-        return jsonify({"responseStatus": "ok", "dateItems": dateItems})
+        return jsonify({"responseStatus": 200, "dateItems": dateItems.json()})
     except Exception as e:
-        return jsonify({"responseStatus": "fail", "dateItems": []})
+        return jsonify({"responseStatus": 404, "dateItems": []})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5005,debug=False)
