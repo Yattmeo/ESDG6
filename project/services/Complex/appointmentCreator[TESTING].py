@@ -9,7 +9,7 @@ def create_appointment():
     appointment_data = request.json
 
     # Make a request to the backend microservice
-    response = requests.post('http://backend_microservice_url/appointments/create', json=appointment_data) #need to add backend microservice url
+    response = requests.post('updateAppointment/appointments/create', json=appointment_data) #need to add backend microservice url
 
     # Return the response from the backend microservice
     return response.json(), response.status_code

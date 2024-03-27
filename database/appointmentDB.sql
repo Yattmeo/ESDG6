@@ -3,8 +3,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET FOREIGN_KEY_CHECKS=0;
 
 -- Create database if not exists
-CREATE DATABASE IF NOT EXISTS `appointmentDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `appointmentDB`;
+CREATE DATABASE IF NOT EXISTS `APPOINTMENTDB` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `APPOINTMENTDB`;
 
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS `Appointments`;
@@ -13,15 +13,15 @@ DROP TABLE IF EXISTS `Patients`;
 
 -- Create Doctors table
 CREATE TABLE `Doctors` (
-  `DoctorID` INTEGER NOT NULL AUTO_INCREMENT,
+  `DoctorID` INTEGER NOT NULL,
   `Specialty` VARCHAR(255) NULL DEFAULT NULL,
-  `Name` VARCHAR(255) NULL DEFAULT NULL,
+  `Name` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`DoctorID`)
 );
 
 -- Create Patients table
 CREATE TABLE `Patients` (
-  `PatientID` INTEGER NOT NULL AUTO_INCREMENT,
+  `PatientID` INTEGER NOT NULL,
   `Name` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`PatientID`)
 );
@@ -40,19 +40,19 @@ CREATE TABLE `Appointments` (
 );
 
 -- Insert dummy data into Doctors table
-INSERT INTO `Doctors` (`Specialty`, `Name`) VALUES
-('Cardiologist', 'Dr. Smith'),
-('Neurologist', 'Dr. Johnson'),
-('Pediatrician', 'Dr. Williams'),
-('Dermatologist', 'Dr. Brown');
+INSERT INTO `Doctors` (`DoctorID`,`Specialty`, `Name`) VALUES
+('1','Cardiologist', 'Dr. Smith'),
+('2','Neurologist', 'Dr. Johnson'),
+('3','Pediatrician', 'Dr. Williams'),
+('4','Dermatologist', 'Dr. Brown');
 
 -- Insert dummy data into Patients table
-INSERT INTO `Patients` (`Name`) VALUES
-('John Doe'),
-('Jane Smith'),
-('Michael Johnson'),
-('Emily Williams'),
-('David Brown');
+INSERT INTO `Patients` (`PatientID`,`Name`) VALUES
+('1','John Doe'),
+('2','Jane Smith'),
+('3','Michael Johnson'),
+('4','Emily Williams'),
+('5','David Brown');
 
 -- Insert dummy data into Appointments table
 INSERT INTO `Appointments` (`Datetime`, `Slot`, `DoctorID_Doctors`, `PatientID_Patients`, `Status`) VALUES

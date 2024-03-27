@@ -1,17 +1,20 @@
-# Use an official Python runtime as the base image
-FROM python:3.9
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copy the requirements file to the working directory
-COPY http.reqs.txt .
+# Copy the current directory contents into the container at /usr/src/app
+COPY . .
 
-# Install the Python dependencies
+# Install any needed dependencies specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the updateAppointment[TESTING].py script to the working directory
-COPY ./updateAppointment.py .
+# Expose the port Flask will run on
+EXPOSE 5008
 
-# Set the command to run the script
-CMD ["python", "updateAppointment.py"]
+# Define environment variable
+ENV DB_URL=mysql+mysqlconnector://root:root@host.docker.internal:8889/APPOINTMENTDB
+
+# Run the Flask application
+CMD ["python", "updateappointment.py"]
