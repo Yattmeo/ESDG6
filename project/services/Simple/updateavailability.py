@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, Date, text
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/availabilitydb'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:8889/availabilitydb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
@@ -27,6 +27,14 @@ class Availability(db.Model):
     doctorID = Column(Integer, primary_key=True)
     date = Column(Date, primary_key=True)
     slots = Column(String)
+
+def json(self):
+        dto = {
+            'doctorID': self.doctorID,
+            'date': self.date,
+            'Slots': self.slots,
+        }
+        return dto
 
 @app.route('/availability', methods=['POST'])
 def update_availability():
