@@ -7,7 +7,7 @@ def update_appointment_microservice(appointment_id):
     # Get the request data from the frontend UI
     data = request.get_json()
     # Make a request to the microservice to update the appointment
-    microservice_url = 'http://microservice-url/appointments/' + appointment_id
+    microservice_url = 'http://updateAppointment/appointments/' + appointment_id
     response = requests.put(microservice_url, json=data)
 
     response_text = response.json()
@@ -19,7 +19,7 @@ def update_appointment_microservice(appointment_id):
         'doctorID': request.json.get('doctorID', None),
         'patientID': request.json.get('patientID', None),
     }
-    notification_microservice_url = 'http://notification-microservice-url/api/send_notification'
+    notification_microservice_url = 'http://notify/send_notification'
     
     notification_response = requests.post(notification_microservice_url, json=notification_data)
     # Return the response from the microservice to the frontend UI
@@ -29,7 +29,7 @@ def update_appointment_microservice(appointment_id):
 @app.route('/getappointment/<doctor_id>', methods=['GET'])
 def get_appointments(doctor_id):
     # Make a request to the microservice to get all appointment objects for the specific doctorID
-    microservice_url = f'http://microservice-url/api/appointments/{doctor_id}'
+    microservice_url = f'http://updateAppointment/appointments/{doctor_id}'
     response = requests.get(microservice_url)
     # Return the response from the microservice to the frontend UI
     return jsonify(response.json()), response.status_code

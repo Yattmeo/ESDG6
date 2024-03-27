@@ -1,37 +1,48 @@
-// this is the expected input to the microservice
 
+// create appointment /appointments/create
+// POST request
 JSON = {
-    "requestCode": 1, // new appointment = 1, amend appointment = 0, delete appointment = -1, GET appointments = 2
-  // following fields can be NULL ONLY FOR GET APPOINTMENTS to act as filters
-    "patientID": 1,
-    "doctorID": 1,
-    "date": "2024-05-17T00:00:00.000Z",
-    "slot": 9,
-    "status": "pending"
-  };
-
-  // for amend appointment, this should trigger the deletion of the specific row and creation a new one
+  "date": "2024-04-01 10:00:00",
+  "doctorID": 2,
+  "patientID": 3,
+  "slot": 2
+}
 
 
-  // response (appointments list is only populated in a GET request, otherwise null)
-  JSON = {
-    "responseStatus": "ok", // or "fail"
-    "appointments" : [
-        {
-            "appointmentID": 123,
-            "date": "2024-05-17T00:00:00.000Z",
-            "slot": 9,
-            "patientID": 112345,
-            "doctorID": 212345,
-            "status": 'confirmed'
-        },
-        {
-            "appointmentID": 124,
-            "date": "2024-05-17T00:00:00.000Z",
-            "slot": 12,
-            "patientID": 112345,
-            "doctorID": 212345,
-            "status": 'confirmed'
-        }
-    ]
+// get appointments /appointments/<string:doctor_id>
+// GET request
+// no json but just specify the doctor_id after the appointments/ in the url
+// returns all appointments for the doctor with the specified doctor_id like this
+JSON = {
+  "appointments": [
+      {
+          "AppointmentID": 1,
+          "Datetime": "2024-03-25 08:00:00",
+          "DoctorID": 1,
+          "PatientID": 2,
+          "Slot": 1,
+          "Status": "Confirmed"
+      },
+      {
+          "AppointmentID": 5,
+          "Datetime": "2024-03-27 08:30:00",
+          "DoctorID": 1,
+          "PatientID": 5,
+          "Slot": 1,
+          "Status": "Confirmed"
+      }
+  ],
+  "code": 200
+}
+
+
+
+// update appointment /appointments/update/<string:appointment_id>
+// PUT request
+JSON = {
+  "date": "2024-03-25 08:00:00",
+  "doctorID": 1,
+  "patientID": 2,
+  "slot": 1,
+  "status": "Confirmed"
 }
