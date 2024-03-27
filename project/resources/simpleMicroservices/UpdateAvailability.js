@@ -4,10 +4,7 @@ JSON = {
     "doctorID": 212345,
     "date": "2024-05-17T00:00:00.000Z",
     "slots": [
-      930,
-      1000,
-      1100,
-      1200
+      4
     ]
   }
 // every time availability for a specific date is updated, it will rewrite the slots attribute in the database for the specific date
@@ -46,19 +43,13 @@ JSON = {
     {
       "date": "2024-05-17T00:00:00.000Z",
       "slots": [
-          930,
-          1000,
-          1100,
-          1200
+          12
       ]
     },
     {
       "date": "2024-05-18T00:00:00.000Z",
       "slots": [
-          930,
-          1000,
-          1100,
-          1200
+          14
       ]
     },
 ]
