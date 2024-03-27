@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -9,14 +10,17 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <!-- Favicon -->
     <link rel="shortcut icon" href="../images/CareMD_icon.png" type="image/x-icon">
+
     <!-- Link to external CSS file -->
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -37,8 +41,7 @@
             </ul>
         </div>
     </nav>
-
-    <!-- Radio buttons for doctor view and -->
+    <!-- Radio buttons for doctor view and patient view -->
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar (to be replaced by vue) -->
@@ -67,14 +70,25 @@
             </div>
 
             <!-- Main Content -->
-            <div class="col-md-9" id="app">
+            <div class="col-md-9">
+                <div class="container-fluid blue py-4 px-4">
+                    <div class="row">
+                        <div class="col-md-6 text-white">
+                            <h2 style="color:black">Looking for a GP doctor?</h2>
+                            <p style="color:rgb(0, 39, 124)">Click on "Book Now" to be randomly assigned a GP
+                                doctor.</p>
+                            <a href="#" class="btn theme btn-light">Book Now</a>
+                        </div>
+                    </div>
+                </div>
                 <!-- Doctor Cards -->
-                <div class="card mt-4" v-for="doctor in doctors" :key="doctor.DoctorID">
+                <div class="card mt-4">
                     <div class="card-body">
-                        <h5 class="card-title">{{ doctor.Name }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Specialty: {{ doctor.Specialty }}</h6>
+                        <h5 class="card-title">Dr. John Doe</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Speciality: Endocrinology</h6>
+                        <!-- Add data-bs-toggle and data-bs-target attributes to trigger the modal -->
                         <a href="#" class="btn theme btn-sm float-end" data-bs-toggle="modal"
-                            data-bs-target="#bookModal" @click="selectedDoctor = doctor">Book</a>
+                            data-bs-target="#bookModal">Book</a>
                     </div>
                 </div>
             </div>
@@ -92,7 +106,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="doctorName" class="form-label">Doctor Name</label>
-                        <input type="text" class="form-control" id="doctorName" id="doctorName" v-model="selectedDoctor.Name" readonly>
+                        <input type="text" class="form-control" id="doctorName" value="Dr. John Doe" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="reason" class="form-label">Reason</label>
@@ -135,52 +149,42 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary">Book Appointment</button>
                     </div>
-                </div>
             </div>
         </div>
     </div>
+
+    
+
 
     <!-- Axios -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Vue.js 3 CDN -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <!-- Bootstrap Bundle JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Flatpickr JS -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        const app = Vue.createApp({
-            data() {
-                return {
-                    doctors: [],
-                    selectedDoctor: null // Added selectedDoctor property to store the selected doctor
-                }
-            },
-            mounted() {
-                // Dummy data representing doctors' availability
-                // after microservice integration, this data will be fetched from the backend
-                // axios.get('http://localhost:3000/doctors-availability')
-
-                const dummyData = [
-                    { DoctorID: 1, Name: 'Dr. Smith', Specialty: 'Cardiologist' },
-                    { DoctorID: 2, Name: 'Dr. Johnson', Specialty: 'Neurologist' },
-                    { DoctorID: 3, Name: 'Dr. Williams', Specialty: 'Pediatrician' },
-                    { DoctorID: 4, Name: 'Dr. Brown', Specialty: 'Dermatologist' }
-                ];
-
-                // Assign dummy data to the doctors array
-                this.doctors = dummyData;
-            }
-        });
-
-        app.mount('#app');
-
         flatpickr('#calendar', {
             inline: true,
             dateFormat: 'Y-m-d',
         });
     </script>
+    <script>// script.js
+        document.addEventListener('DOMContentLoaded', function() {
+          // Add click event listener to time slots
+          const slots = document.querySelectorAll('.slot');
+          slots.forEach(slot => {
+            slot.addEventListener('click', function() {
+              // Highlight selected slot
+              slots.forEach(s => s.classList.remove('selected'));
+              this.classList.add('selected');
+              // Retrieve selected date and time
+              const day = document.querySelector('.days .day.selected').textContent;
+              const time = this.textContent;
+              console.log(`Selected date: ${day}, Selected time: ${time}`);
+            });
+          });
+        });
+    </script>
 </body>
 
 </html>
-
