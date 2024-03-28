@@ -13,8 +13,8 @@ services:
   updateAppointment:
     build:
       context: ./
-      dockerfile: updateAppointment.Dockerfile
-    image: #name of image
+      dockerfile: updateappointment.Dockerfile
+    image: updateappointment
     restart: always
     environment:
       DB_URL: mysql+mysqlconnector://root@localhost:3306/order
@@ -125,8 +125,8 @@ services:
   appointmentCreator:
     build:
       context: ./
-      dockerfile: appointmentCreator.Dockerfile
-    image: #name of image
+      dockerfile: appointmentcreator.Dockerfile
+    image: appointmentcreator
     restart: always
     depends_on:
       - updateAppointment
@@ -139,7 +139,7 @@ services:
       rabbit_port: 5672
       PYTHONUNBUFFERED: 1
     ports:
-      # - "5100:5100"
+      - "5007:5007"
 
   ###############################################
   # Appointment Updater: The Appointment Updater microservice
