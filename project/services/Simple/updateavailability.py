@@ -8,7 +8,7 @@ from sqlalchemy import Column, Integer, String, Date, text, ForeignKey, SmallInt
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root:root@localhost:8889/schedulingDB'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root:root@localhost:8889/schedulingDB' or 'mysql+mysqlconnector://root:root@localhost:3306/schedulingDB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
@@ -100,4 +100,4 @@ def get_availability(DoctorID_Doctors):
         return jsonify({"responseStatus": 404, "dateItems": []})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5005,debug=False)
+    app.run(host='0.0.0.0', port=5007,debug=False)
