@@ -94,7 +94,8 @@ def create_or_update_patient_ehr(patient_id):
             return jsonify(
                 {
                     "code": 201,
-                    "data": ehr.json()
+                    "data": ehr.json(),
+                    "message": "EHR created successfully."
                 }
             ), 201
         
@@ -102,7 +103,8 @@ def create_or_update_patient_ehr(patient_id):
         return jsonify(
             {
                 "code": 200,
-                "data": ehr.json()
+                "data": ehr.json(),
+                "message": "EHR updated successfully."
             }
         ), 200
     except Exception as e:
