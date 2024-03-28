@@ -13,8 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Expose the port Flask will run on
 EXPOSE 5008
 
+ARG DB_PORT=8889
 # Define environment variable
-ENV DB_URL=mysql+mysqlconnector://root:root@host.docker.internal:8889/APPOINTMENTDB
+ENV DB_URL=mysql+mysqlconnector://root:root@host.docker.internal:${DB_PORT}/APPOINTMENTDB
 
 # Run the Flask application
 CMD ["python", "updateappointment.py"]
